@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="backoffice">
+    <meta name="author" content="Pierre-Emmanuel Laporte">
+
+    <title>Administration</title>
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/administration.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/font-awesome.css') }}">
+    <script src="{{ asset('js/jquery.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src='{{ asset('js/tinymce/tinymce.min.js') }}'></script>
+</head>
+
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ path('home') }}">Billet simple pour l'Alaska</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a id="lienPass" href="{{ path('home') }}">Retourner au site</a></li>
+                <li><a id="lienPass" href="{{ path('security_update') }}">Changer votre mot de passe</a></li>
+                <li><a id="lienDeco" href="{{ path('security_logout') }}">Se déconnecter</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div id="contenu">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+                <ul class="nav nav-sidebar">
+                    <li class="{{ (app.request.attributes.get('_route') == 'admin_home' ? "active" ) }}">
+                        <a id="lienDashboard" href="{{ path('admin_home') }}">
+                            <img src="{{ asset('images/symbol/dashboard.png') }}" alt="Tableau de bord"
+                                 title="Tableau de bord"> Tableau de bord
+                        </a>
+                    </li>
+
+                    {% if is_granted('ROLE_USER') %}
+                        <li class="{{ (app.request.attributes.get('_route') == 'admin_administration' ? "active" ) }}">
+                            <a id="lienAdministration" href="{{ path('admin_administration') }}">
+                                <img src="{{ asset('images/symbol/admin.png') }}" alt="Panneau d'administration"
+                                     title="Panneau d'administration">Administration</a><span
+                                    class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="{{ (app.request.attributes.get('_route') == 'admin_moderation' ? "active" ) }}">
+                            <a id="lienModeration" href="{{ path('admin_moderation') }}">
+                                <img src="{{ asset('images/symbol/moderer.png') }}" alt="Panneau de modération"
+                                     title="Panneau de modération"> Panneau de modération
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_USER') %}
+                        <li class="{{ (app.request.attributes.get('_route') == 'admin_utilisateurs' ? "active" ) }}">
+                            <a id="lienUtilisateurs" href="{{ path('admin_utilisateurs') }}">
+                                <img src="{{ asset('images/symbol/user.png') }}" alt="Panneau de gestion utilisateur"
+                                     title="Gestion utilisateur(s)">Utilisateur(s)
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+                {% block body %}
+                    <!-- Contenu de la partie admin -->
+                {% endblock body %}
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

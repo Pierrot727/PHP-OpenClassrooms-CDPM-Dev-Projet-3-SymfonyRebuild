@@ -1,0 +1,34 @@
+{% extends 'gabaritPublic.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        {% dump (app.user) %}
+        {% for billet in billets %}
+            <div class="post-block"><a href="{{ path('blog_show', {'id': billet.id }) }}">
+                    {% if billet.image != null %}
+                        <img class="polaroid" src="{{ asset('images/illustrations/defaut-medium.jpg') }}"></a>
+                    {% else %}
+                        <img class="polaroid" src="/images/illustrations/{{ billet.image }}-medium.jpg"></a>
+                    {% endif %}
+
+                <div class="corps-post">
+                <span>
+                    <i class="fa fa-user"></i> Jean FORTEROCHE - {{ billet.createdAt | date('d/m/Y') }}
+                    à {{ billet.createdAt | date('H:i') }}
+                </span>
+                    <p class="titre-post">
+                    <span class="bords-arrondis">EPISODE {{ billet.title }}
+                    </span>
+                    </p>
+                    <p class="texte-post">{{ billet.content | raw }}
+                    </p>
+                </div>
+                <div class="pied-post">
+                    <i class="fa fa-comment-o"></i> <span>{{ commentaires|length }}
+                    commentaires | </span>
+                    <a href="{{ path('blog_show', {'id': billet.id }) }}">Lire la suite</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

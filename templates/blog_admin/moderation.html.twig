@@ -1,0 +1,76 @@
+{% extends 'gabaritAdmin.html.twig' %}
+
+{% block body %}
+
+
+    <h1 class="page-header"></h1>
+    <div class="row placeholders">
+        <div id="contenu">
+
+            <h2>Panneau de modération</h2>
+            <br>
+            <form action="" method="post">
+                <h2 class="sub-header">Gestion des commentaires et signalements</h2>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Titre du billet</th>
+                            <th>Commentaire</th>
+                            <th>Signalement(s)</th>
+                            <th>Action(s)</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% if comments is null %}
+                            <tr>
+                                <th>-</th>
+                                <th>Aucun commentaire à afficher</th>
+                                <th>-</th>
+                                <th>-</th>
+                            </tr>
+                        {% else %}
+                            {% for comment in comments %}
+
+                                <tr>
+                                    <th>
+                                        TITRE BILLET
+                                    </th>
+                                    <th>
+                                        {{ comment.content }}
+                                    </th>
+                                    <th>
+                                        SIGNALEMENT
+                                    </th>
+                                    <th>
+                                        <a id="lienEditerCommentaire"
+                                           href="">
+                                            <img src="{{ asset('images/symbol/commentaire-edit.png') }}"
+                                                 alt="modifier billet"
+                                                 title="Editer le commentaire">
+                                        </a>
+                                        <a id="lienSupprimerCommentaire"
+                                           href="">
+                                            <img src="{{ asset('images/symbol/commentaire-sup.png') }}"
+                                                 alt="supprimer commentaire" title="Suprimer le commentaire">
+                                        </a>
+                                        <a id="lienSupprimerSignalement"
+                                           href="">
+                                            <img src="{{ asset('images/symbol/signalement-sup.png') }}"
+                                                 alt="supprimer signalement" title="Supprimer le/les signalements">
+                                        </a>
+
+                                    </th>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div> <!-- #contenu -->
+            </form>
+            <hr>
+        </div>
+
+    </div>
+{% endblock %}

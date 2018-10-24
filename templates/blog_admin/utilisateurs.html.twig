@@ -1,0 +1,95 @@
+{% extends 'gabaritAdmin.html.twig' %}
+
+{% block body %}
+    <h1 class="page-header"></h1>
+    <div class="row placeholders">
+        <div id="contenu">
+
+            <h2>Panneau de gestion des utilisateurs</h2>
+            <br>
+
+            <form action="#" method="post">
+
+
+                <h2 class="sub-header">Liste des utilisateurs</h2>
+                <div class="table-responsive">
+                    <a id="lienIns" href="#">
+                        <img src="{{ asset('/images/symbol/user-new.png') }}" alt="Ajouter un nouvel utilisateur"
+                             title="Ajouter un nouvel utilisateur"> Ajouter un nouvel utilisateur</a>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Login</th>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Date de naissance</th>
+                            <th>Email</th>
+                            <th>Grade</th>
+                            <th>Action(s)</th>
+                            <th>Administration</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <th>{{ user.username }}</th>
+                                <th>{{ user.name }}</th>
+                                <th>{{ user.firstName }}</th>
+                                <th>{{ user.birthdate|date() }}</th>
+                                <th>{{ user.email }}</th>
+                                <th>ROLE</th>
+                                <th><a id="lienEditerUtilisateur" href="#">
+                                        <img src="{{ asset('/images/symbol/user-edit.png') }}" alt="Editer utilisateur"
+                                             title="Editer l'utilisateur">
+                                    </a>
+                                    {% if user.roles == "Admin" %}
+                                        <a id="lienSupprimerUtilisateur" href="#">
+                                            <img src="{{ asset('/images/symbol/user-supr.png') }}"
+                                                 alt="Supprimer utilisateur"
+                                                 title="Supprimer l'utilisateur">
+                                        </a>
+                                    {% endif %}
+                                    {% if user.roles == "Banni" %}
+                                        <a id="lienDebanirUtilisateur" href="#">
+                                            <img src="{{ asset('/images/symbol/user-unban.png') }}"
+                                                 alt="Débanir l'utilisateur"
+                                                 title="Débanir l'utilisateur">
+                                        </a>
+                                    {% else %}
+                                        <a id="lienBanirUtilisateur" href="#">
+                                            <img src="{{ asset('/images/symbol/user-ban.png') }}"
+                                                 alt="Banir l'utilisateur"
+                                                 title="Banir l'utilisateur">
+                                        </a>
+                                    {% endif %}
+
+                                </th>
+                                <th>
+                                    <a id="lienBanirUtilisateur" href="{{ path('admin_demote') }}">
+                                        <img src="{{ asset('/images/symbol/user-demote.png') }}"
+                                             alt="Enlever les droits de moderation/administration"
+                                             title="Enlever les droits de moderation/administration">
+                                    </a>
+                                    <a id="lienPromoteModo" href="#">
+                                        <img src="{{ asset('/images/symbol/user-modo.png') }}"
+                                             alt="Promouvoir modérateur"
+                                             title="Promouvoir modérateur">
+                                    </a>
+                                    <a id="lienBanirUtilisateur" href="#">
+                                        <img src="{{ asset('/images/symbol/user-admin.png') }}"
+                                             alt="Promouvoir administrateur"
+                                             title="Promouvoir administrateur">
+                                    </a>
+                                </th>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+            <hr>
+        </div>
+    </div>
+{% endblock %}
+

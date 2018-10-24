@@ -1,0 +1,25 @@
+{% extends 'gabaritPublic.html.twig.' %}
+
+{% block body %}
+    <div class="row">
+    <form class="form-signin login-box" action="{{ path ('security_login') }}" method="post" >
+
+
+        <form class="form-signin login-box" action="{{ path ('security_login') }}" method="post" >
+            <h2>Identifiez-vous</h2></br>
+            <label for="inputEmail" class="sr-only">Login</label>
+            <label><h5>Identifiant :</h5></label>
+            <input type="text" id="inputEmail" class="form-control" placeholder="Entrez votre login" name="_username" required
+                   autofocus><br>
+            <label><h5>Mot de passe :</h5></label>
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" id="inputPassword" class="form-control" placeholder="Entrez votre mot de passe"
+                   name="_password" required></br>
+            <a href="{{ path ('security_registration') }}">S'inscrire sur le site</a></br>
+            </br>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">S'identifier</button>
+        </form>
+    </form>
+    </div>
+
+{%  endblock %}

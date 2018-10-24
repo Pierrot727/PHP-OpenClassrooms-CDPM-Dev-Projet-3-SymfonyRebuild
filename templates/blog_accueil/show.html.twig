@@ -1,0 +1,89 @@
+{% extends 'gabaritPublic.html.twig.' %}
+
+{% block body %}
+    <div class="row">
+        <div class="colonne-gauche">
+            {% if billet.image != null %}
+                <img class="polaroid" src="{{ asset('images/illustrations/defaut-large.jpg') }}"></a>
+            {% else %}
+                <img class="polaroid" src="/images/illustrations/{{ billet.image }}-large.jpg"></a>
+            {% endif %}
+            <div class="img-overlay">
+                Auteur Jean FORTEROCHE, {{ billet.createdAt | date('d/m/Y') }} à {{ billet.createdAt | date('H:i') }}
+            </div>
+            <!--  blocks gauche -->
+            <h3>{{ billet.title }}</h3>
+            <div class="left-block texte-courant">
+                {{ billet.content }}
+            </div>
+
+            <h3>Commentaires</h3>
+            <div class="left-block">
+                Il y a {{ commentaires|length }} commentaire(s)
+
+                {% for commentaire in commentaires %}
+                    <form method="post" action="">
+                        <p>
+                            <input type="hidden" name="id_comment" value="">
+                            <input type="hidden" name="id_episode" value="">
+                            <span class="pseudo">
+                            <i class="fa fa-pencil"
+                               aria-hidden="true"></i>
+                                {{ commentaire.author }}
+                        </span>
+                            <span class="comment-date">
+                            {{ commentaire.createdAt|date() }}
+                        </span>
+                            <span class="comment-signaler">
+                            <a href="">Signaler le commentaire</a>
+                        </span>
+                        <p>
+                        <span>
+                            {{ commentaire.content }}
+                        </span>
+                        </p>
+                        </p>
+                    </form>
+                {% endfor %}
+
+            </div>
+
+            <h3>Laisser votre commentaire</h3>
+            <div class="left-block comment-form">
+                <form class="largeur-totale" action="" method="post">
+                    <label>Vous êtes identifié, ID, vous pouvez poster, si vous le souhaitez votre
+                        commentaire ci-dessous :</br>
+                    </label>
+                    </br>
+                    <label>Commentaire</label>
+                    <div>
+                        <textarea enabled=false rows="8" class="bords-arrondis largeur-totale"
+                                  name="contenu"></textarea>
+                    </div>
+                    <p>
+                        <input type="hidden" name="id" value="">
+                        <input type="submit" class="bords-arrondis" value="Commenter">
+                    </p>
+                </form>
+            </div>
+        </div>
+
+        <div class="colonne-droite">
+            <h3 class="first">Derniers épisodes</h3>
+            <div class="right-block">
+                {% for billet in billets %}
+                    <div class="liste-titres">
+                        <a href="{{ path('blog_show', {'id': billet.id }) }}">
+                            {% if billet.image != null %}
+                            <img class="thumbnail" src="{{ asset('images/illustrations/defaut-small.jpg') }}"></a>
+                        {% else %}
+                            <img class="thumbnail" src="/images/illustrations/{{ billet.image }}-small.jpg"></a>
+                        {% endif %}
+                        {{ billet.title }}
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

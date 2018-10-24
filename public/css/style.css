@@ -1,0 +1,76 @@
+/*
+Feuille de style global en surcharge de BootStrap
+*/
+
+html, body {
+    height: 100%;
+    padding-left: 2%;
+    padding-right:2%;
+}
+
+body {
+    color: #black;
+    font-family: 'Futura-Medium', 'Futura', 'Trebuchet MS', sans-serif;
+}
+
+
+#titre-page {
+    margin-bottom : 0px;
+
+
+}
+
+#sous-titre-page {
+    margin-bottom : 0px;
+
+}
+
+corp {
+    width: 80%;
+}
+
+nav.menu ul {
+    display: flex;
+    flex-direction: row;
+}
+
+header.visiteur{
+
+    height:200px;
+    background-size:cover;
+    text-align:center;
+    margin:0 0 30px 0;
+
+}
+
+header.administation{
+
+}
+
+#contenu {
+    margin-bottom : 30px;
+}
+
+
+#titreReponses {
+    font-size : 100%;
+}
+
+#txtCommentaire {
+    width: 50%;
+}
+
+table
+{
+    border-collapse: collapse; /* Les bordures du tableau seront collées (plus joli) */
+}
+
+
+td /* Toutes les cellules des tableaux... */
+{
+    border: 1px solid black; /* auront une bordure de 1px */
+
+
+}
+
+

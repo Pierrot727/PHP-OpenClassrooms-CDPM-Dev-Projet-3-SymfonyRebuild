@@ -1,0 +1,21 @@
+{% extends 'gabaritAdmin.html.twig' %}
+
+{% block body %}
+    <h2>Création d'un nouveau billet</h2>
+    <br>
+    <hr>
+    <div class="crud-box">
+
+        {{ form_start(form) }}
+        {{ form_row(form.title, { 'label': 'Nom de l\'article', 'attr': {'placeholder': 'Nom de l\'article ...'}}) }}
+        {{ form_row(form.content, { 'label': 'Contenu de l\'article', 'attr': {'placeholder': 'Votre article ...', 'class': 'text'}}) }}
+
+        {{ form_row(form.category) }}
+        {{ form_row(form.image) }}
+
+        <button type="submit" class="btn btn-info">Créer le billet</button>
+        {{ form_end(form) }}
+    </div>
+
+
+{% endblock %}

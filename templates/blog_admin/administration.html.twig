@@ -1,0 +1,107 @@
+{% extends 'gabaritAdmin.html.twig' %}
+
+{% block body %}
+
+
+        <h1 class="page-header"></h1>
+        <div class="row placeholders">
+            <div id="contenu">
+
+                <h2>Administration</h2>
+                <br>
+                Bienvenue, {{ app.user.username }} !
+                Ce blog comporte {{ billets|length }} billet(s) et {{ comments|length }} commentaire(s) et XXX signalements </br>
+                <hr>
+                <a id="lienCrBillet" href="{{ path('admin_billetCreate') }}">
+                    <img src="{{ asset('images/symbol/nouveau.png') }}" alt="Nouveau billet" title="Nouveau billet">
+                    Créer un nouveau billet
+                </a>
+
+                <a id="lienCrBillet" href="#">
+                    <img src="{{ asset('images/symbol/profil.png') }}" alt="Editer mon profil"
+                         title="Editer mon profil"> Editer le profil "Mon histoire"
+                </a>
+
+                <form action="{{ path('admin_administration') }}" method="post">
+                    <h2 class="sub-header">Ensemble des billets</h2>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Selection</th>
+                                <th>Titre</th>
+                                <th>Date</th>
+                                <th>Billet commençant par</th>
+                                <th>Commentaire(s)</th>
+                                <th>Signalement(s)</th>
+                                <th>Visible</th>
+                                <th>Action(s)</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+
+
+                            {% for billet in billets %}
+                                <tr>
+
+                                    <th><input id="checkbox" name="check_list[]"
+                                               value="{{ billet.id }}"
+                                               type="checkbox">
+                                    </th>
+                                    <th>
+                                        <a href="{{ path('blog_show', {'id': billet.id}) }}">{{ billet.title }}</a>
+                                    </th>
+                                    <th>
+                                        <time>{{ billet.createdAt|date }}</time>
+                                    </th>
+                                    <th>{{ billet.content }}</th>
+                                    <th>{{ billet.comments|length }}</th>
+                                    <th>COMPTEUR SIG</th>
+                                    <th>{% if billet.visible == true %}
+                                            <a id="lienBilletVisible" href="{{ path('blog_hide', {'id': billet.id}) }}">
+                                                <img src="{{ asset('images/symbol/visible.png') }}"
+                                                     alt="Rendre visible le billet"
+                                                     title="Cliquez pour rendre visible le billet">
+                                            </a>
+                                        {% else %}
+                                            <a id="lienBilletMasquer"
+                                               href="{{ path('blog_hide', {'id': billet.id}) }}">
+                                                <img src="{{ asset('/images/symbol/masquer.png') }}"
+                                                     alt="Masquer billet"
+                                                     title="Cliquez pour masquer le billet">
+                                            </a>
+                                        {% endif %}
+                                    </th>
+                                    <th><a href="#">
+                                            <img src="{{ asset('/images/symbol/modifier.png') }}" alt="modifier billet"
+                                                 title="Cliquez pour modifier le billet selectionné">
+                                        </a>
+                                        <a href="#" class="btn-del-billet">
+                                            <i class="icon-trash"></i>
+                                            <img src="{{ asset('images/symbol/supprimer.png') }}" alt="supprimer billet"
+                                                 title="Cliquez pour supprimer le billet selectionné">
+                                        </a>
+
+
+                                    </th>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+
+                            <div class="col-xs-12 col-md-12 form-group">
+                                <select name="form_action">
+                                    <option value="">Choisissez une action groupée</option>
+                                    <option value="supprimer">Supprimer</option>
+                                </select>
+
+                                <button type="submit" name="action_valider">Valider</button>
+
+                            </div>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'gabaritPublic.html.twig' %}
+
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_row(form.username, { 'label': 'Identifiant', 'attr': {'placeholder': 'Entrez votre identifiant ...'} })  }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.password) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.fistName) }}
+    {{ form_row(form.birthDate) }}
+    {{ form_row(form.picture) }}
+    <button type="submit"  class="btn btn-success" style="align-content: center">Mettre à jour</button>
+    {{ form_end(form) }}
+
+{%  endblock %}
