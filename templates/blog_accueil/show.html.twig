@@ -35,7 +35,7 @@
                             {{ commentaire.createdAt|date() }}
                         </span>
                             <span class="comment-signaler">
-                            <a href="">Signaler le commentaire</a>
+                            <a href="{{ path('blog_signaler', {id: commentaire.id}) }}">Signaler le commentaire</a>
                         </span>
                         <p>
                         <span>
@@ -50,21 +50,15 @@
 
             <h3>Laisser votre commentaire</h3>
             <div class="left-block comment-form">
-                <form class="largeur-totale" action="" method="post">
-                    <label>Vous êtes identifié, ID, vous pouvez poster, si vous le souhaitez votre
-                        commentaire ci-dessous :</br>
-                    </label>
-                    </br>
-                    <label>Commentaire</label>
-                    <div>
-                        <textarea enabled=false rows="8" class="bords-arrondis largeur-totale"
-                                  name="contenu"></textarea>
-                    </div>
-                    <p>
-                        <input type="hidden" name="id" value="">
-                        <input type="submit" class="bords-arrondis" value="Commenter">
-                    </p>
-                </form>
+
+                {{ form_start(form, { 'attr': {'class': 'largeur-totale'}}) }}
+                {{ form_row(form.content, { 'label': 'Commentaire:', 'attr': {'placeholder': 'Votre commentaire ...', 'class': 'text'}}) }}
+                <p>
+                    <button type="submit" class="bords-arrondis">Commenter</button>
+                </p>
+                {{ form_end(form) }}
+
+
             </div>
         </div>
 

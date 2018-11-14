@@ -197,19 +197,23 @@ class User implements UserInterface
 
         return $this;
     }
-    public function stringMyRole()
+    public function getReadableRole()
     {
-       // dump($this->roles);
-       // $role = implode(($this->roles));
-       // if ($role == 'ROLE_ADMIN') {
-       //     $this->myRole = "Admin";
-       // }
-        return $this;
-        //return json_decode($this->roles);
+        return preg_replace("#ROLE_#", "", implode(($this->roles)));
     }
     public function demoteUser()
     {
-        $this->setRoles(["User"]);
+        $this->setRoles(["ROLE_USER"]);
+        return $this;
+    }
+    public function promoteModo()
+    {
+        $this->setRoles(["ROLE_MODO"]);
+        return $this;
+    }
+    public function promoteAdmin()
+    {
+        $this->setRoles(["ROLE_ADMIN"]);
         return $this;
     }
 }

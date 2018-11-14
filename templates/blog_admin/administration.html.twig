@@ -10,7 +10,7 @@
                 <h2>Administration</h2>
                 <br>
                 Bienvenue, {{ app.user.username }} !
-                Ce blog comporte {{ billets|length }} billet(s) et {{ comments|length }} commentaire(s) et XXX signalements </br>
+                Ce blog comporte {{ billets|length }} billet(s) et {{ comments|length }} commentaire(s) et x signalements </br>
                 <hr>
                 <a id="lienCrBillet" href="{{ path('admin_billetCreate') }}">
                     <img src="{{ asset('images/symbol/nouveau.png') }}" alt="Nouveau billet" title="Nouveau billet">
@@ -57,7 +57,7 @@
                                     </th>
                                     <th>{{ billet.content }}</th>
                                     <th>{{ billet.comments|length }}</th>
-                                    <th>COMPTEUR SIG</th>
+                                    <th>{{ billet.countSignalements }}</th>
                                     <th>{% if billet.visible == true %}
                                             <a id="lienBilletVisible" href="{{ path('blog_hide', {'id': billet.id}) }}">
                                                 <img src="{{ asset('images/symbol/visible.png') }}"

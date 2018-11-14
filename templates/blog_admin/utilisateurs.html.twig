@@ -13,7 +13,7 @@
 
                 <h2 class="sub-header">Liste des utilisateurs</h2>
                 <div class="table-responsive">
-                    <a id="lienIns" href="#">
+                    <a id="lienIns" href="{{ path('security_registration') }}">
                         <img src="{{ asset('/images/symbol/user-new.png') }}" alt="Ajouter un nouvel utilisateur"
                              title="Ajouter un nouvel utilisateur"> Ajouter un nouvel utilisateur</a>
                     <table class="table table-striped">
@@ -38,12 +38,12 @@
                                 <th>{{ user.firstName }}</th>
                                 <th>{{ user.birthdate|date() }}</th>
                                 <th>{{ user.email }}</th>
-                                <th>ROLE</th>
+                                <th>{{ user.readableRole }}</th>
                                 <th><a id="lienEditerUtilisateur" href="#">
                                         <img src="{{ asset('/images/symbol/user-edit.png') }}" alt="Editer utilisateur"
                                              title="Editer l'utilisateur">
                                     </a>
-                                    {% if user.roles == "Admin" %}
+                                    {% if is_granted("ROLE_ADMIN") %}
                                         <a id="lienSupprimerUtilisateur" href="#">
                                             <img src="{{ asset('/images/symbol/user-supr.png') }}"
                                                  alt="Supprimer utilisateur"
@@ -66,17 +66,17 @@
 
                                 </th>
                                 <th>
-                                    <a id="lienBanirUtilisateur" href="{{ path('admin_demote') }}">
+                                    <a id="lienBanirUtilisateur" href="{{ path('admin_demote', {'id': user.id}) }}">
                                         <img src="{{ asset('/images/symbol/user-demote.png') }}"
                                              alt="Enlever les droits de moderation/administration"
                                              title="Enlever les droits de moderation/administration">
                                     </a>
-                                    <a id="lienPromoteModo" href="#">
+                                    <a id="lienPromoteModo" href="{{ path('admin_promoteModo', {'id': user.id}) }}">
                                         <img src="{{ asset('/images/symbol/user-modo.png') }}"
                                              alt="Promouvoir modérateur"
                                              title="Promouvoir modérateur">
                                     </a>
-                                    <a id="lienBanirUtilisateur" href="#">
+                                    <a id="lienBanirUtilisateur" href="{{ path('admin_promoteAdmin', {'id': user.id}) }}">
                                         <img src="{{ asset('/images/symbol/user-admin.png') }}"
                                              alt="Promouvoir administrateur"
                                              title="Promouvoir administrateur">

@@ -50,7 +50,7 @@ class Billet
     private $category;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="article", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="billet", orphanRemoval=true)
      */
     private $comments;
 
@@ -155,7 +155,7 @@ class Billet
     {
         if (!$this->comments->contains($comment)) {
             $this->comments[] = $comment;
-            $comment->setArticle($this);
+            $comment->setBillet($this);
         }
 
         return $this;
@@ -166,11 +166,22 @@ class Billet
         if ($this->comments->contains($comment)) {
             $this->comments->removeElement($comment);
             // set the owning side to null (unless already changed)
-            if ($comment->getArticle() === $this) {
-                $comment->setArticle(null);
+            if ($comment->getBillet() === $this) {
+                $comment->setBillet(null);
             }
         }
 
         return $this;
+    }
+
+
+    public function countSignalements()
+    {
+        $count = 0;
+        foreach ($this->getComments() as $comment){
+            $count += $comment->getSignalement();
+        }
+
+        return $count;
     }
 }

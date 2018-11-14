@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Billet;
 use App\Entity\User;
-use App\Entity\Comment;
 use App\Form\BilletType;
 use App\Repository\BilletRepository;
 use App\Repository\CommentRepository;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,22 +20,20 @@ class BlogAdminController extends AbstractController
     /**
      * @Route("/admin", name="admin_home")
      */
-    public function index()
+    public function index(BilletRepository $billetRepository, CommentRepository $commentRepository)
     {
         // Vérification de l'authentification user
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Vous devez être authentifié!');
 
         $user = $this->getUser();
-        $repoBillets = $this->getDoctrine()->getRepository(Billet::class);
-        $billets = $repoBillets->findAll();
+        $billets = $billetRepository->findAll();
 
-      //  $repoComments = $this->getDoctrine()->getRepository(CommentRepository::class);
-      //  $comments = $repoComments->findAll();
+        $comments = $commentRepository->findAll();
 
         return $this->render('blog_admin/index.html.twig', [
             'user' => $user,
             'billets' => $billets,
-      //      'comments' => $comments
+            'comments' => $comments,
         ]);
     }
 
@@ -132,6 +132,8 @@ class BlogAdminController extends AbstractController
      * @Route ("/admin/moderation", name="admin_moderation")
      * @param CommentRepository $commentRepository
      *
+     * @param BilletRepository $billetRepository
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function moderation(CommentRepository $commentRepository, BilletRepository $billetRepository) {
@@ -144,13 +146,50 @@ class BlogAdminController extends AbstractController
     }
 
     /**
-     * @Route ("/admin/demote", name="admin_demote")
+     * @Route ("/admin/demote/{id}", name="admin_demote")
+     * @param User $user
+     * @param EntityManagerInterface $manager
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
 
-    public function demoteUser()
+    public function demoteUser(User $user, EntityManagerInterface $manager)
     {
-        $this->demoteUser();
+        $user->demoteUser();
+        $manager->flush();
 
-        return $this->redirectToRoute('admin_moderation');
+        return $this->redirectToRoute('admin_utilisateurs');
     }
+
+    /**
+     * @Route ("/admin/promoteModo/{id}", name="admin_promoteModo")
+     * @param User $user
+     * @param EntityManagerInterface $manager
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+
+    public function promoteModo(User $user, EntityManagerInterface $manager)
+    {
+        $user->promoteModo();
+        $manager->flush();
+
+        return $this->redirectToRoute('admin_utilisateurs');
+    }
+
+    /**
+     * @Route ("/admin/promoteAdmin/{id}", name="admin_promoteAdmin")
+     * @param User $user
+     * @param EntityManagerInterface $manager
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function promoteAdmin(User $user, EntityManagerInterface $manager)
+    {
+        $user->promoteAdmin();
+        $manager->flush();
+
+        return $this->redirectToRoute('admin_utilisateurs');
+    }
+
 }

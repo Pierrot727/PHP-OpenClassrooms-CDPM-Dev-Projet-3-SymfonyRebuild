@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\BilletRepository;
+use App\DTO\CommentInitDTO;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CommentRepository")
@@ -25,6 +26,7 @@ class Comment
     /**
      * @var string
      * @ORM\Column(type="text", nullable=false)
+     * @Assert\Length(min=10)
      */
     private $content;
 
@@ -37,18 +39,34 @@ class Comment
      * @ORM\ManyToOne(targetEntity="App\Entity\Billet", inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $article;
+    private $billet;
+
+    /**
+     * @var string
+     * @ORM\Column(type="integer", nullable=false, options={"default":0})
+     */
+    private $signalement;
+
+    /**
+     * Comment constructor.
+     *
+     * @param User $user
+     */
+    public function __construct()
+    {
+
+        $this->createdAt = new \DateTime();
+        $this->signalement = 0;
+
+    }
+
+
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getBilletTitle(BilletRepository $billetRepository): ?string
-    {
-        //todo
-        return $this;
-    }
 
     public function getAuthor(): ?string
     {
@@ -74,14 +92,14 @@ class Comment
         return $this;
     }
 
-    public function getArticle(): ?billet
+    public function getBillet(): ?billet
     {
-        return $this->article;
+        return $this->billet;
     }
 
-    public function setArticle(?billet $article): self
+    public function setBillet(?billet $billet): self
     {
-        $this->article = $article;
+        $this->billet = $billet;
 
         return $this;
     }
@@ -91,10 +109,29 @@ class Comment
         return $this->content;
     }
 
-    public function setContent(string $content): self
+    public function setContent(string $signalement): self
     {
-        $this->content = $content;
+        $this->content = $signalement;
 
         return $this;
     }
+
+    public function getSignalement(): ?int
+    {
+        return $this->signalement;
+    }
+
+    public function setSignalement(int $signalement): self
+    {
+        $this->signalement = $signalement;
+
+        return $this;
+    }
+
+    public function incrementSignalement() {
+        $this->signalement +=1;
+
+        return $this;
+    }
+
 }
